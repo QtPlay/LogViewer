@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>751</width>
+    <height>645</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="mainLayout"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>751</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="separator"/>
+    <addaction name="action_3"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <addaction name="actionManual"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="action_9"/>
+   <addaction name="actionOpenLogFile"/>
+   <addaction name="actionOpenProject"/>
+   <addaction name="separator"/>
+   <addaction name="actionAddOrChangeFilter"/>
+   <addaction name="actionSortFilter"/>
+   <addaction name="actionHighlightFilter"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
+  </widget>
+  <action name="action">
+   <property name="text">
+    <string>Открыть файл лога</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Открыть проект</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/exit.png</normaloff>:/image/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="actionManual">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/book.png</normaloff>:/image/book.png</iconset>
+   </property>
+   <property name="text">
+    <string>Инструкция</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/rdf-file.png</normaloff>:/image/rdf-file.png</iconset>
+   </property>
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="actionOpenLogFile">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/file.png</normaloff>:/image/file.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть файл лога</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/database.png</normaloff>:/image/database.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть проект</string>
+   </property>
+  </action>
+  <action name="actionAddOrChangeFilter">
+   <property name="text">
+    <string>Фильтры:</string>
+   </property>
+   <property name="toolTip">
+    <string>Добавить\Изменить фильтр:</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/settings-gears.png</normaloff>:/image/settings-gears.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>Файлы:</string>
+   </property>
+  </action>
+  <action name="actionSortFilter">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/sort.png</normaloff>:/image/sort.png</iconset>
+   </property>
+   <property name="text">
+    <string>Фильтр сортировки</string>
+   </property>
+  </action>
+  <action name="actionHighlightFilter">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/rgb.png</normaloff>:/image/rgb.png</iconset>
+   </property>
+   <property name="text">
+    <string>Фильтр подсветки</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

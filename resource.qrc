@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/forward-arrow.png</file>
+        <file>image/backward-arrow.png</file>
+        <file>image/backward-arrows-couple-pointing-to-left.png</file>
+        <file>image/fast-backward-double-left-arrow-symbol.png</file>
+        <file>image/fast-forward.png</file>
+        <file>image/exchange.png</file>
+        <file>image/ok-mark.png</file>
+        <file>image/view.png</file>
+        <file>image/exit-to-app-button.png</file>
+        <file>image/add.png</file>
+        <file>image/shuffle.png</file>
+        <file>image/cancel.png</file>
+        <file>image/power-button.png</file>
+        <file>image/power.png</file>
+        <file>image/book.png</file>
+        <file>image/rdf-file.png</file>
+        <file>image/exit.png</file>
+        <file>image/rgb.png</file>
+        <file>image/sort.png</file>
+        <file>image/database.png</file>
+        <file>image/file.png</file>
+        <file>image/settings-gears.png</file>
+    </qresource>
+</RCC>

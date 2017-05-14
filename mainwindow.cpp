@@ -65,12 +65,12 @@ MainWindow::MainWindow(QWidget *parent) :
     DatabaseManager::getInstance().openDatabase("C:\\Users\\alexsandr\\Desktop\\test.db");
     DatabaseManager::getInstance().openDatabase("C:\\Users\\alexsandr\\Desktop\\test1.db");
 
-//    FilterDialog fileDialog;
-//    fileDialog.addFilter(QString("C:\\Users\\alexsandr\\Desktop\\test.db"), Filter::SORT);
-//    if (fileDialog.exec()) {
+    //    FilterDialog fileDialog;
+    //    fileDialog.addFilter(QString("C:\\Users\\alexsandr\\Desktop\\test.db"), Filter::SORT);
+    //    if (fileDialog.exec()) {
 
-//    }
-    return;
+    //    }
+    //return;
 
     //connect(ui->pb_openFile, SIGNAL(released()), this, SLOT(openFile()));
 
@@ -153,96 +153,107 @@ MainWindow::MainWindow(QWidget *parent) :
     //QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     //db.setDatabaseName("C:\\Users\\alexsandr\\Desktop\\test.db");
     //if (db.open()) {
-//        QSqlQuery query(db);
-//        if (!query.exec("select * from info where field2 regexp('86.98.12.*')")) {
-//            qDebug() << query.lastError().text();
-//        } else {
-//            int count = 0;
-//            while (query.next() && count < 5) {
-//                qDebug() << query.record().value(2);
-//                count++;
-//            }
-//        }
-//        return;
+    //        QSqlQuery query(db);
+    //        if (!query.exec("select * from info where field2 regexp('86.98.12.*')")) {
+    //            qDebug() << query.lastError().text();
+    //        } else {
+    //            int count = 0;
+    //            while (query.next() && count < 5) {
+    //                qDebug() << query.record().value(2);
+    //                count++;
+    //            }
+    //        }
+    //        return;
 
-//        QString textInsertQuery = QString("insert into info (field1, field2, field3, field4, field5) values %1");
-//        QString textValues = QString("(%1, '%2', %3, %4, %5)");
-//        QString resultValue;
-//        QSqlQuery insertQuery(db);
-//        int c = 5000;
-//        int count = 0;
-//        for (int i = 0; i < 100000; ++i) {
-//            QString textValuesComplete = textValues.arg(i).arg(QString("sasha") + QString::number(i)).arg(i + 0.4568f).arg(QDateTime::currentSecsSinceEpoch()).arg(QTime::currentTime().msecsSinceStartOfDay());
-//            //qDebug() << textCompleteQuery;
-//            resultValue += textValuesComplete;
-//            if (count == c || i + 1 == 100000) {
-//                if (!insertQuery.exec(textInsertQuery.arg(resultValue))) {
-//                    qDebug() << insertQuery.lastError().text();
-//                }
-//                //qDebug() << textInsertQuery.arg(resultValue);
-//                resultValue.clear();
-//                count = 0;
-//            } else {
-//                resultValue += ", ";
-//                count++;
-//            }
-//        }
+    //        QString textInsertQuery = QString("insert into info (field1, field2, field3, field4, field5) values %1");
+    //        QString textValues = QString("(%1, '%2', %3, %4, %5)");
+    //        QString resultValue;
+    //        QSqlQuery insertQuery(db);
+    //        int c = 5000;
+    //        int count = 0;
+    //        for (int i = 0; i < 100000; ++i) {
+    //            QString textValuesComplete = textValues.arg(i).arg(QString("sasha") + QString::number(i)).arg(i + 0.4568f).arg(QDateTime::currentSecsSinceEpoch()).arg(QTime::currentTime().msecsSinceStartOfDay());
+    //            //qDebug() << textCompleteQuery;
+    //            resultValue += textValuesComplete;
+    //            if (count == c || i + 1 == 100000) {
+    //                if (!insertQuery.exec(textInsertQuery.arg(resultValue))) {
+    //                    qDebug() << insertQuery.lastError().text();
+    //                }
+    //                //qDebug() << textInsertQuery.arg(resultValue);
+    //                resultValue.clear();
+    //                count = 0;
+    //            } else {
+    //                resultValue += ", ";
+    //                count++;
+    //            }
+    //        }
 
-//        m_logDataView->setDatabase(db);
-//        m_logDataView->setDatabaseTable("info");
-//        m_logDataView->updateData();
-//        //ui->logDataView->hideColumn(0);
+    //        m_logDataView->setDatabase(db);
+    //        m_logDataView->setDatabaseTable("info");
+    //        m_logDataView->updateData();
+    //        //ui->logDataView->hideColumn(0);
 
-//        QMap<QString, QVariant::Type> mapFieldTypes;
-//        mapFieldTypes["id"] = QVariant::Int;
-//        mapFieldTypes["field1"] = QVariant::Int;
-//        mapFieldTypes["field2"] = QVariant::String;
-//        mapFieldTypes["field3"] = QVariant::Double;
-//        mapFieldTypes["field4"] = QVariant::Date;
-//        mapFieldTypes["field5"] = QVariant::Time;
-//        m_logDataView->setInfoFieldTypes(mapFieldTypes);
+    //        QMap<QString, QVariant::Type> mapFieldTypes;
+    //        mapFieldTypes["id"] = QVariant::Int;
+    //        mapFieldTypes["field1"] = QVariant::Int;
+    //        mapFieldTypes["field2"] = QVariant::String;
+    //        mapFieldTypes["field3"] = QVariant::Double;
+    //        mapFieldTypes["field4"] = QVariant::Date;
+    //        mapFieldTypes["field5"] = QVariant::Time;
+    //        m_logDataView->setInfoFieldTypes(mapFieldTypes);
 
 
-//        SortFilter sortFilter;
+    //        SortFilter sortFilter;
 
-//        DescriptionFilter descFilter;
-//        descFilter.columnName = "field2";
-//        descFilter.signRegExp = true;
-//        descFilter.relationSign = RelationSign::E;
-//        descFilter.filterValue = "^p.*";
-//        sortFilter.listDescriptionFilter.append(descFilter);
+    //        DescriptionFilter descFilter;
+    //        descFilter.columnName = "field2";
+    //        descFilter.signRegExp = true;
+    //        descFilter.relationSign = RelationSign::E;
+    //        descFilter.filterValue = "^p.*";
+    //        sortFilter.listDescriptionFilter.append(descFilter);
 
-//        DescriptionFilter descFilter2;
-//        descFilter2.columnName = "field1";
-//        descFilter2.signRegExp = false;
-//        descFilter2.relationSign = RelationSign::E;
-//        descFilter2.filterValue = "7";
-//        sortFilter.listDescriptionFilter.append(descFilter2);
-//        ui->logDataView->setSortFilter(sortFilter);
+    //        DescriptionFilter descFilter2;
+    //        descFilter2.columnName = "field1";
+    //        descFilter2.signRegExp = false;
+    //        descFilter2.relationSign = RelationSign::E;
+    //        descFilter2.filterValue = "7";
+    //        sortFilter.listDescriptionFilter.append(descFilter2);
+    //        ui->logDataView->setSortFilter(sortFilter);
 
-//        HighlighFilter highlightFilter;
-//        DescriptionHighlighFilter f1;
-//        f1.color = QColor(Qt::red);
-//        f1.filterValue = "1";
-//        f1.relationSign = RelationSign::GE;
-//        highlightFilter.listDescriptionFilter.append(f1);
+    //        HighlighFilter highlightFilter;
+    //        DescriptionHighlighFilter f1;
+    //        f1.color = QColor(Qt::red);
+    //        f1.filterValue = "1";
+    //        f1.relationSign = RelationSign::GE;
+    //        highlightFilter.listDescriptionFilter.append(f1);
 
-//        DescriptionHighlighFilter f2;
-//        f2.color = QColor(Qt::red);
-//        f2.filterValue = "5";
-//        f2.relationSign = RelationSign::L;
-//        highlightFilter.listDescriptionFilter.append(f2);
+    //        DescriptionHighlighFilter f2;
+    //        f2.color = QColor(Qt::red);
+    //        f2.filterValue = "5";
+    //        f2.relationSign = RelationSign::L;
+    //        highlightFilter.listDescriptionFilter.append(f2);
 
-//        DescriptionHighlighFilter f3;
-//        f3.color = QColor(Qt::green);
-//        f3.filterValue = "4";
-//        f3.relationSign = RelationSign::E;
-//        highlightFilter.listDescriptionFilter.append(f3);
+    //        DescriptionHighlighFilter f3;
+    //        f3.color = QColor(Qt::green);
+    //        f3.filterValue = "4";
+    //        f3.relationSign = RelationSign::E;
+    //        highlightFilter.listDescriptionFilter.append(f3);
 
-//        ui->logDataView->setHighlightFilter(highlightFilter, "field1");
+    //        ui->logDataView->setHighlightFilter(highlightFilter, "field1");
 
-//    }
-//    m_databaseDataView->updateTreeView();
+    //    }
+    //    m_databaseDataView->updateTreeView();
+
+    QString input = "64.242.88.10 - - [07/Mar/2004:16:10:02 -0800] \"GET /mailman/listinfo/hsdivision HTTP/1.1\" 200 6291";
+    QString regExp = "(.+)\\s+(.+)\\s+(.+)\\s+\\\[(.+)\\s+([-]?\\d+)\]\\s+\"(.+)\\s+(.+)\\s+(.+)\\\"\\s+([-]?\\d+)\\s+([-]?\\d+)";
+    qDebug() << regExp;
+    QRegExp rx = QRegExp(regExp);
+    qDebug() << "result = " << rx.exactMatch(input);
+
+    QLocale locale(QLocale::English);
+    qDebug() << locale.toDate("07/Mar/2004", "dd/MMM/yyyy");
+
+    qDebug() << QDate(2004, 3, 7).toString("dd/MMM/yyyy");
 }
 
 MainWindow::~MainWindow()

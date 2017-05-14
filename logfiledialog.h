@@ -23,6 +23,7 @@ public:
 private slots:
     void openFile();
     void checkLogData();
+    void clearHistory();
 
 protected:
     QMap <QString, LogLineParser::TokenDescription> getTokenDescription() const;
@@ -30,6 +31,7 @@ protected:
 private:
     Ui::LogFileDialog *ui;
     QStringList m_exampleLogData;
+    LogLineParser *m_logLineParser;
 };
 
 #endif // LOGFILEDIALOG_H

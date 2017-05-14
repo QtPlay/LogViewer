@@ -7,6 +7,7 @@
 #include <QThreadPool>
 #include <QDateTime>
 #include <QDir>
+#include <QLocale>
 #include <QMessageBox>
 
 #include "logfilereadertask.h"

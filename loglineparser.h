@@ -5,53 +5,73 @@
 #include <QMap>
 #include <QChar>
 #include <QVariant>
+#include <QDebug>
+#include <QTime>
+#include <QDate>
+#include <QDateTime>
 #include <QStringList>
 
 class LogLineParser : public QObject
 {
     Q_OBJECT
 public:
-    enum ResultCode {
-        RESULT_OK,
-        RESULT_BAD_FORMAT
+    enum ErrorCode {
+        BAD_TOKEN,
+        BAD_FORMAT,
+        NO_ERROR
+    };
+
+    struct ReadError {
+        ErrorCode errorCode;
+        QString errorText;
     };
 
     struct TokenDescription {
         QString regExp;
         QString format;
-        QVariant::Type typeVariable;
+        QVariant::Type type;
 
-        TokenDescription(const QString& regExp, const QString& format, QVariant::Type typeVariable) {
+        TokenDescription(const QString& regExp, const QString& format, QVariant::Type type) {
             this->format = format;
             this->regExp = regExp;
-            this->typeVariable = typeVariable;
+            this->type = type;
         }
 
         TokenDescription() {}
     };
 
     struct TokenInfo {
-        QString value;
-        QVariant::Type typeVariable;
+        QString token;
+        QString format;
+        QVariant::Type type;
 
-        TokenInfo(const QString& value, QVariant::Type typeVariable) {
-            this->value = value;
-            this->typeVariable = typeVariable;
+        TokenInfo(const QString& token, const QString& format, QVariant::Type type) {
+            this->token = token;
+            this->format = format;
+            this->type = type;
         }
     };
 
-    explicit LogLineParser(const QString formatLine, QObject *parent = 0);
-    std::tuple<QStringList, ResultCode> parseLine(const QString& line);
-    QList <QVariant::Type> getListVariableTypeToken() const;
+    explicit LogLineParser(QObject *parent = 0);
+    QStringList parseLine(const QString& line);
+
+    QString regExpFormat() const;
+    QList<TokenInfo> tokenInfo();
+    ReadError error() const;
+
+    void setTokenDescription(QMap<QString, LogLineParser::TokenDescription> tokenDescription);
+    void setLineFormat(const QString& lineFormat);
 
 protected:
-    void initialize();
+    QString convert2RegExpFormat(const QString& format);
+    QString convertSymbol2RegExpFormat(const QChar symbol);
 
 private:
+    ReadError m_readError;
     QString m_regExpFormatLine;
-    QString m_formatLine;
-    QMap <QChar, TypeVariableForRegExp> m_mapTokenInfo;
-    QList <QVariant::Type> m_variableTypeToken;
+    QMap <QString, TokenDescription> m_mapTokenDescription;
+    QList <int> m_indexCheckedLexeme;
+    QList <TokenInfo> m_listTokenInfo;
 };
 
 #endif // LOGLINEPARSER_H

@@ -2,14 +2,18 @@
 
 LogLineParser::LogLineParser(QObject *parent) : QObject(parent)
 {
-    m_errorCode = NO_ERROR;
+    m_readError.errorCode = NO_ERROR;
 }
 
 QStringList LogLineParser::parseLine(const QString &line)
 {
+    m_readError.errorCode = NO_ERROR;
+    m_readError.errorText.clear();
+
     QRegExp regExp(m_regExpFormatLine);
     if (!regExp.exactMatch(line)) {
-        m_errorCode = BAD_TOKEN;
+        m_readError.errorCode = BAD_TOKEN;
+        m_readError.errorText.append(regExp.errorString());
         return QStringList();
     }
 
@@ -17,12 +21,43 @@ QStringList LogLineParser::parseLine(const QString &line)
     QStringList parsedValues = regExp.capturedTexts();
     parsedValues.removeFirst();
 
-    if (values.size() != m_listTokenInfo.size()) {
-        m_errorCode = BAD_TOKEN;
-        return QStringList();
+    if (parsedValues.size() != m_listTokenInfo.size()) {
+        m_readError.errorCode = BAD_TOKEN;
+        m_readError.errorText.append("Count parsed values not equal count description token");
+    } else {
+        for (auto it = m_indexCheckedLexeme.cbegin(); it != m_indexCheckedLexeme.cend(); ++it) {
+            TokenInfo tokenInfo = m_listTokenInfo.at((*it));
+            switch (tokenInfo.type) {
+            case QVariant::Time:
+                if (!QTime::fromString(parsedValues.at((*it)), tokenInfo.format).isValid()) {
+                    m_readError.errorCode = BAD_FORMAT;
+                    m_readError.errorText.append(QString("Bad time format (%1, %2)\n").arg(parsedValues.value((*it))).arg(tokenInfo.format));
+                }
+                break;
+            case QVariant::Date:
+                if (!QDate::fromString(parsedValues.at((*it)), tokenInfo.format).isValid()) {
+                    m_readError.errorCode = BAD_FORMAT;
+                    m_readError.errorText.append(QString("Bad date format (%1, %2)\n").arg(parsedValues.value((*it))).arg(tokenInfo.format));
+                }
+                break;
+            case QVariant::DateTime:
+                if (!QDateTime::fromString(parsedValues.at((*it)), tokenInfo.format).isValid()) {
+                    m_readError.errorCode = BAD_FORMAT;
+                    m_readError.errorText.append(QString("Bad datetime format (%1, %2)\n").arg(parsedValues.value((*it))).arg(tokenInfo.format));
+                }
+                break;
+            default:
+                break;
+            }
+        }
     }
 
-    return std::make_tuple(values, RESULT_OK);
+    return parsedValues;
+}
+
+QString LogLineParser::regExpFormat() const
+{
+    return m_regExpFormatLine;
 }
 
 
@@ -31,9 +66,9 @@ QList<LogLineParser::TokenInfo> LogLineParser::tokenInfo()
     return m_listTokenInfo;
 }
 
-LogLineParser::ErrorCode LogLineParser::errorCode()
+LogLineParser::ReadError LogLineParser::error() const
 {
-    return m_errorCode;
+    return m_readError;
 }
 
 void LogLineParser::setTokenDescription(QMap<QString, LogLineParser::TokenDescription> tokenDescription)
@@ -43,6 +78,8 @@ void LogLineParser::setTokenDescription(QMap<QString, LogLineParser::TokenDescri
 
 void LogLineParser::setLineFormat(const QString &lineFormat)
 {
+    m_listTokenInfo.clear();
+    m_indexCheckedLexeme.clear();
     m_regExpFormatLine = convert2RegExpFormat(lineFormat);
 }
 
@@ -54,10 +91,17 @@ QString LogLineParser::convert2RegExpFormat(const QString &format)
         bool resetLexeme = false;
         if (!lexeme.isEmpty()) {
             lexeme.append(currentSymbol);
-            if (lexeme.contains(m_mapTokenDescription)) {
+            if (m_mapTokenDescription.contains(lexeme)) {
                 outputFormat.append(m_mapTokenDescription.value(lexeme).regExp);
+
+                QVariant::Type typeLexeme = m_mapTokenDescription.value(lexeme).type;
+                if (typeLexeme == QVariant::Time || typeLexeme == QVariant::Date || typeLexeme == QVariant::DateTime) {
+                    m_indexCheckedLexeme << m_listTokenInfo.size();
+                }
+
                 m_listTokenInfo.append(TokenInfo(lexeme, m_mapTokenDescription.value(lexeme).format, m_mapTokenDescription.value(lexeme).type));
                 lexeme.clear();
+                continue;
             } else {
                 resetLexeme = true;
             }
@@ -68,6 +112,7 @@ QString LogLineParser::convert2RegExpFormat(const QString &format)
                 outputFormat.append(convertSymbol2RegExpFormat((*it)));
             }
             lexeme.clear();
+            continue;
         }
 
         if (currentSymbol == '%') {
@@ -77,6 +122,7 @@ QString LogLineParser::convert2RegExpFormat(const QString &format)
             outputFormat.append(convertSymbol2RegExpFormat(currentSymbol));
         }
     }
+    return outputFormat;
 }
 
 QString LogLineParser::convertSymbol2RegExpFormat(const QChar symbol)

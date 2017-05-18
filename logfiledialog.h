@@ -6,6 +6,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <QStringList>
+#include <QList>
+#include <QHash>
+#include <QLocale>
 #include "loglineparser.h"
 
 namespace Ui {
@@ -24,6 +27,9 @@ private slots:
     void openFile();
     void checkLogData();
     void clearHistory();
+    void selectFormatFromHistory();
+    void resetLocale();
+    void updateLocale(int newIndex);
 
 protected:
     QMap <QString, LogLineParser::TokenDescription> getTokenDescription() const;
@@ -32,6 +38,8 @@ private:
     Ui::LogFileDialog *ui;
     QStringList m_exampleLogData;
     LogLineParser *m_logLineParser;
+    QLocale m_currentLocale;
+    QHash <QString, QLocale::Language> m_hashLanguages;
 };
 
 #endif // LOGFILEDIALOG_H

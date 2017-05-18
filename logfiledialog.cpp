@@ -10,8 +10,24 @@ LogFileDialog::LogFileDialog(QWidget *parent) :
     connect(ui->chooseLogFile, SIGNAL(released()), this, SLOT(openFile()));
     connect(ui->check, SIGNAL(released()), this, SLOT(checkLogData()));
     connect(ui->clearHistory, SIGNAL(released()), this, SLOT(clearHistory()));
+    connect(ui->selectFormatFromHistory, SIGNAL(released()), this, SLOT(selectFormatFromHistory()));
 
+    QList<QLocale> setLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
+    QStringList listLanguagesName;
+    for (auto it = setLocales.cbegin(); it != setLocales.cend(); ++it) {
+        QString languageName = QLocale::languageToString((*it).language());
+        if (!m_hashLanguages.contains(languageName)) {
+            m_hashLanguages.insert(languageName, (*it).language());
+            listLanguagesName.append(languageName);
+        }
+    }
+    std::sort(listLanguagesName.begin(), listLanguagesName.end());
+    ui->localeName->addItems(listLanguagesName);
+    resetLocale();
     m_logLineParser = new LogLineParser();
+    m_logLineParser->setLocale(m_currentLocale);
+
+    connect(ui->localeName, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLocale(int)));
 }
 
 LogFileDialog::~LogFileDialog()
@@ -57,7 +73,6 @@ void LogFileDialog::checkLogData()
             m_logLineParser->setTokenDescription(getTokenDescription());
             m_logLineParser->setLineFormat(inputFormat);
             QList<LogLineParser::TokenInfo> tokenInfo = m_logLineParser->tokenInfo();
-            ui->regExpFormat->setText(m_logLineParser->regExpFormat());
             ui->history->addItem(ui->formatData->text());
             for (auto it = m_exampleLogData.cbegin(); it != m_exampleLogData.cend(); ++it) {
                 QStringList parsedData = m_logLineParser->parseLine((*it));
@@ -82,6 +97,32 @@ void LogFileDialog::checkLogData()
 void LogFileDialog::clearHistory()
 {
     ui->history->clear();
+}
+
+void LogFileDialog::selectFormatFromHistory()
+{
+    if (ui->history->currentIndex() < 0) {
+        ui->formatData->clear();
+    } else {
+        ui->formatData->setText(ui->history->currentText());
+    }
+}
+
+void LogFileDialog::resetLocale()
+{
+    m_currentLocale = QLocale();
+    ui->localeName->setCurrentIndex(ui->localeName->findText(QLocale::languageToString(m_currentLocale.language())));
+}
+
+void LogFileDialog::updateLocale(int newIndex)
+{
+    if (ui->localeName->currentIndex() < 0) return;
+
+    if (m_hashLanguages.contains(ui->localeName->currentText())) {
+        m_currentLocale = QLocale(m_hashLanguages.value(ui->localeName->currentText()));
+        m_logLineParser->setLocale(m_currentLocale);
+        qDebug() << m_currentLocale;
+    }
 }
 
 QMap<QString, LogLineParser::TokenDescription> LogFileDialog::getTokenDescription() const

@@ -243,17 +243,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //    }
     //    m_databaseDataView->updateTreeView();
-
-    QString input = "64.242.88.10 - - [07/Mar/2004:16:10:02 -0800] \"GET /mailman/listinfo/hsdivision HTTP/1.1\" 200 6291";
-    QString regExp = "(.+)\\s+(.+)\\s+(.+)\\s+\\\[(.+)\\s+([-]?\\d+)\]\\s+\"(.+)\\s+(.+)\\s+(.+)\\\"\\s+([-]?\\d+)\\s+([-]?\\d+)";
-    qDebug() << regExp;
-    QRegExp rx = QRegExp(regExp);
-    qDebug() << "result = " << rx.exactMatch(input);
-
-    QLocale locale(QLocale::English);
-    qDebug() << locale.toDate("07/Mar/2004", "dd/MMM/yyyy");
-
-    qDebug() << QDate(2004, 3, 7).toString("dd/MMM/yyyy");
 }
 
 MainWindow::~MainWindow()

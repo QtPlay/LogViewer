@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QDate>
+#include <QLocale>
 #include <QDateTime>
 #include <QStringList>
 
@@ -61,6 +62,7 @@ public:
 
     void setTokenDescription(QMap<QString, LogLineParser::TokenDescription> tokenDescription);
     void setLineFormat(const QString& lineFormat);
+    void setLocale(QLocale locale);
 
 protected:
     QString convert2RegExpFormat(const QString& format);
@@ -72,6 +74,7 @@ private:
     QMap <QString, TokenDescription> m_mapTokenDescription;
     QList <int> m_indexCheckedLexeme;
     QList <TokenInfo> m_listTokenInfo;
+    QLocale m_locale;
 };
 
 #endif // LOGLINEPARSER_H
